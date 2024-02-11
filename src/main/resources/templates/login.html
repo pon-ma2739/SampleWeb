@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>ログイン画面</title>
+</head>
+<body>
+	<div th:insert="common/sourceList::sourceList"></div>
+	<div th:replace="common/messageIcon::messageIcon"></div>
+	<div class="container-fulid">
+		<nav class="navbar">
+			<h1>ログイン画面</h1>			
+		</nav>
+		<div  class="alert alert-danger d-flex align-items-center" role="alert" th:if="${errorMsg} != null">
+			<svg class="bi flex-shrink-0 me-2" width="24" height="24" aria-label="Danger">
+				<use xlink:href="#exclamation-triangle-fill" />
+			</svg>
+			<span th:text="${errorMsg}"></span>
+		</div>
+		<!-- @{/login} は http://*****.***/login に展開される-->
+		<form th:action="@{/login}" method="post" th:object="${loginForm}">
+			<div class="form-group">
+				<div class="col-3 mb-3">
+					<label for="loginId" class="form-label">ログインID：</label>
+					<!-- *{loginId} は id="loginId" name="loginId" に展開される -->
+					<input type="text" th:field="*{loginId}" class="form-control"/>
+				</div>
+				<div class="col-3 mb-3">
+					<label for="password"class="form-label">パスワード：</label>
+					<input type="password" th:field="*{password}" class="form-control"/>
+				</div>
+				<div class="col-3 mb-3">					
+					<input type="submit" value="Login" class="btn btn-primary mb-3"/>				
+				</div>
+			</div>
+		</form>
+		<a th:href="@{/signup}">▶ユーザー登録はコチラ</a>
+	</div>
+</body>
+</html>

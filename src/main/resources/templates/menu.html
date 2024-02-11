@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>トップメニュー</title>
+</head>
+<body>
+	<div th:insert="common/sourceList :: sourceList"></div>
+	<div th:replace="common/header :: header"></div>
+	<div class="container-fulid">
+		<h1>トップメニューだよ</h1>
+		<div class="mt-3">
+			<p>商品一覧の確認、管理はこちら</p>
+		</div>
+		<a href="" class="btn btn-primary">商品一覧画面へ</a>
+		<th:block th:if="${hasUserManageAuth}">
+			<div class="mt-3">
+				<p>ユーザー情報の管理はこちら</p>
+				<a href="" class="btn btn-danger">ユーザー管理画面へ</a>
+			</div>
+		</th:block>
+	</div>
+</body>
+</html>
