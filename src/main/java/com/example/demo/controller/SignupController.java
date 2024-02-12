@@ -1,8 +1,13 @@
 package com.example.demo.controller;
 
 
-import java.util.Optional;
-
+import com.example.demo.constant.MessageConst;
+import com.example.demo.constant.SignupMessage;
+import com.example.demo.entity.UserInfo;
+import com.example.demo.form.SignupForm;
+import com.example.demo.service.SignupService;
+import com.example.demo.util.AppUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,14 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.constant.MessageConst;
-import com.example.demo.constant.SignupMessage;
-import com.example.demo.entity.UserInfo;
-import com.example.demo.form.SignupForm;
-import com.example.demo.service.SignupService;
-import com.example.demo.util.AppUtil;
-
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 
 /**
  * ユーザー登録画面 Controllerクラス
@@ -29,8 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignupController {
 	
-	/** ユーザー登録画面 Service */
-	private final SignupService  service;
+	/** ユーザー登録画面Serviceクラス */
+	private final SignupService service;
 
 	/** メッセージソース */
 	private final MessageSource messageSource;
