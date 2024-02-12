@@ -1,7 +1,7 @@
 package com.example.demo.constant;
 
 /**
- * メッセージID定数クラス
+ * エラーメッセージID定数クラス
  * 
  * @author Pon
  */

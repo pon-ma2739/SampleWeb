@@ -21,7 +21,7 @@ import com.example.demo.util.AppUtil;
 import lombok.RequiredArgsConstructor;
 
 /**
- * ユーザー登録画面 Controller
+ * ユーザー登録画面 Controllerクラス
  * 
  * @author Pon
  */
@@ -34,36 +34,32 @@ public class SignupController {
 
 	/** メッセージソース */
 	private final MessageSource messageSource;
-	
+
 	/**
-	 * 初期表示
-	 * 
+	 * 画面の初期表示を行います。
+	 *
 	 * @param model モデル
 	 * @param form 入力情報
-	 * @return 表示画面
-	 * 
-	 * @author Pon
+	 * @return ユーザー登録画面
 	 */
 	@GetMapping("/signup")
 	public String view(Model model, SignupForm form) {
 		return "signup";
 	}
-	
-	
-	 
+
 	/**
-	 * ユーザー登録
-	 * 
+	 * 画面の入力情報からユーザー登録処理を呼び出します。
+	 *
+	 * <p>ただし、入力チェックでエラーになった場合や登録済みのログインIDを使っていた場合は<br>
+	 * エラーメッセージを画面に表示します。
+	 *
 	 * @param model モデル
 	 * @param form 入力情報
-	 * @param bdResult 入力チェック結果
-	 * @return 表示画面
-	 * 
-	 * @author Pon
+	 * @param bdResult 入力内容の単項目チェック結果
 	 */
 	@PostMapping("/signup")
 	public void signup(Model model, @Validated SignupForm form, BindingResult bdResult) {
-		/** バリデーションの結果がエラーか判定 */
+
 		if(bdResult.hasErrors()) {
 			editGuideMessage(model,MessageConst.FORM_ERROR,true);
 			return;
@@ -72,30 +68,28 @@ public class SignupController {
 		var signupMessage = judgeMessageKey(userInfoOpt);
 		editGuideMessage(model, signupMessage.getMessageId(), signupMessage.isError());
 	}
-	
+
 	/**
-	 * 
-	 * 画面に表示するガイドメッセージを設定する
-	 * 
+	 * メッセージIDを使ってプロパティファイルからメッセージを取得し、画面に表示します。
+	 *
+	 * <p>また、画面でメッセージを表示する際に通常メッセージとエラーメッセージとで色分けをするため、<br>
+	 * その判定に必要な情報も画面に渡します。
+	 *
 	 * @param model モデル
-	 * @param messageId メッセージID
+	 * @param messageId プロパティファイルから取得したいメッセージのID
 	 * @param isError エラー有無
-	 * 
-	 * @author Pon
 	 */
 	private void editGuideMessage(Model model, String messageId, boolean isError) {
 		String message = AppUtil.getMesssage(messageSource, messageId);
 		model.addAttribute("message", message);
 		model.addAttribute("isError", isError);
 	}
-	
+
 	/**
-	 * ユーザー情報登録の結果メッセージキーを判断する
-	 * 
-	 * @param userInfoOpt ユーザー登録情報(登録済みの場合はEmpty)
-	 * @return メッセージキー
-	 * 
-	 * @author Pon
+	 * ユーザ情報登録の結果メッセージキーを判断します。
+	 *
+	 * @param userInfoOpt ユーザ登録結果(入力されたログインIDのユーザーが登録済みだった場合はEmpty)
+	 * @return プロパティファイルから取得するメッセージの情報
 	 */
 	private SignupMessage judgeMessageKey(Optional<UserInfo> userInfoOpt) {
 		if(userInfoOpt.isEmpty()) {

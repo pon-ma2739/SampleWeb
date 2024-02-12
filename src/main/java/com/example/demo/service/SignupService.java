@@ -14,7 +14,7 @@ import com.example.demo.repository.UserInfoRepository;
 import lombok.RequiredArgsConstructor;
 
 /**
- * ユーザー登録 Service
+ * ユーザー登録画面Serviceクラス
  * 
  * @author Pon
  */
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignupService {
 	
-	/** ユーザー情報テーブルDAO */
+	/** ユーザー情報テーブルRepositoryクラス */
 	private final UserInfoRepository repository;
 	
 	/** Dozer Mapper */
@@ -30,14 +30,18 @@ public class SignupService {
 	
 	/** PasswordEncoder */
 	private final PasswordEncoder passwordEncoder;
-	
+
 	/**
-	 * ユーザー情報テーブル 主キー検索
-	 * 
+	 * 画面の入力情報を元にユーザー情報テーブルの新規登録を行います。
+	 *
+	 * <p>ただし、以下のテーブル項目はこの限りではありません。
+	 * <ul>
+	 * <li>パスワード：画面で入力したパスワードがハッシュ化され登録されます。</li>
+	 * <li>権限：常に「商品情報の確認が可能」のコード値が登録されます。</li>
+	 * </ul>
+	 *
 	 * @param form 入力情報
-	 * @return 登録情報(ユーザー情報Entity)、すでに同じユーザーIDで登録がある場合はEmpty
-	 * 
-	 * @author Pon
+	 * @return 登録情報(ユーザー情報Entity)、既に同じユーザIDで登録がある場合はEmpty
 	 */
 	public Optional<UserInfo> registUserInfo(SignupForm form) {
 		/** 受け取ったログインIDが既に登録されているかチェック */

@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * ユーザー情報テーブル Entity
+ * ユーザー情報テーブルEntityクラス
  * 
  * @author Pon
  */
@@ -20,8 +20,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserInfo {
 	/** ログインID */
-	@Id												// PKを示す
-	@Column(name = "login_id")		// カラム名と紐づける
+	@Id
+	@Column(name = "login_id")
 	private String loginId;
 	
 	/** パスワード */
@@ -42,39 +42,35 @@ public class UserInfo {
 	/** ユーザー権限 */
 	@Column()
 	private String authority;
-	
-	/** 引数なしコンストラクタ */
+
+	/**
+	 * デフォルトコンストラクタ
+	 */
 	public UserInfo() {
 	}
-	
+
 	/**
-	 * ログイン失敗回数をインクリメントする
-	 * 
-	 * @return ログイン失敗回数がインクリメントされたUserInfo
-	 * 
-	 * @author Pon
+	 * ログイン失敗回数をインクリメントします。
+	 *
+	 * @return ログイン失敗回数がインクリメントされた、自身のインスタンス
 	 */
 	public UserInfo incrementLoginFailureCount() {
 		return new UserInfo(loginId, password, ++loginFailureCount, accountLockedTime, isDisabled, authority);
 	}
-	
+
 	/**
-	 * ログイン失敗情報をリセットする
-	 * 
-	 * @return ログイン失敗情報がリセットされたUserInfo
-	 * 
-	 * @author Pon
+	 * ログイン失敗情報をリセットします。
+	 *
+	 * @return ログイン失敗情報がリセットされた、自身のインスタンス
 	 */
 	public UserInfo resetLoginFailureInfo() {
 		return new UserInfo(loginId, password, 0, null, isDisabled, authority);
 	}
-	
+
 	/**
-	 * アカウントロック状態を更新する
-	 * 
-	 * @return ログイン失敗回数、アカウントロック日時が更新されたUserInfo
-	 * 
-	 * @author Pon
+	 * ログイン失敗回数、アカウントロック日時を更新し、アカウントロック状態に更新します。
+	 *
+	 * @return ログイン失敗回数、アカウントロック日時が更新された、自身のインスタンス
 	 */
 	public UserInfo updateAccountLocked() {
 		return new UserInfo(loginId, password, 0, LocalDateTime.now(), isDisabled, authority);

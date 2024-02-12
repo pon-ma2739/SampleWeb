@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
 /** 
- * ユーザー登録画面 Form
+ * ユーザー登録画面Formクラス
  * 
  * @author Pon
  */

@@ -2,7 +2,7 @@ package com.example.demo.form;
 
 import lombok.Data;
 /** 
- * ログイン画面 Form
+ * ログイン画面Formクラス
  * 
  * @author Pon
  */

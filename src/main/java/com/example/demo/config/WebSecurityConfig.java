@@ -16,7 +16,7 @@ import com.example.demo.constant.UrlConst;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Spring Securityカスタマイズ用
+ * Spring Securityカスタマイズクラス
  * 
  * @author Pon
  */
@@ -36,13 +36,21 @@ public class WebSecurityConfig {
 	
 	/** ユーザー名のname属性 */
 	private final String USERNAME_PARAMETER = "loginId";
-	
+
 	/**
-	 * Spring Secutiryカスタマイズ用
-	 * 
-	 * @param http カスタマイズパラメータ
-	 * @return カスタマイズ情報
-	 * @throws Exception 予期せぬ例外
+	 * Spring Securityの各種カスタマイズを行います。
+	 *
+	 * <p>カスタマイズ設定するのは、以下の項目になります。
+	 * <ul>
+	 * <li>認証不要URL</li>
+	 * <li>ログイン画面のURL</li>
+	 * <li>usernameとして利用するリクエストパラメーター名</li>
+	 * <li>ログイン成功時のリダイレクト先URL</li>
+	 * </ul>
+	 *
+	 * @param http セキュリティ設定
+	 * @return カスタマイズ結果
+	 * @throws Exception 予期せぬ例外が発生した場合
 	 */
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -61,13 +69,18 @@ public class WebSecurityConfig {
 		
 		return http.build();
 	}
-	
+
 	/**
-	 * Provider定義
-	 * 
-	 * @return カスタマイズProvider情報
-	 * 
-	 * @author Pon
+	 * Providerのカスタマイズを行い、独自Providerを返却します。
+	 *
+	 * <p>カスタマイズ設定するのは、以下のフィールドになります。
+	 * <ul>
+	 * <li>UserDetailsService</li>
+	 * <li>PasswordEncoder</li>
+	 * <li>MessageSource</li>
+	 * </ul>
+	 *
+	 * @return カスタマイズしたProvider情報
 	 */
 	@Bean
 	AuthenticationProvider daoAuthenticationProvider() {
