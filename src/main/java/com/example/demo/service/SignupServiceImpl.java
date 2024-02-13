@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.dozer.Mapper;
+import com.example.demo.constant.UserStatusKind;
+import com.github.dozermapper.core.Mapper;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +50,10 @@ public class SignupServiceImpl implements SignupService {
 		
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		userInfo.setPassword(encodedPassword);
-		userInfo.setAuthority(AuthorityKind.ITEM_WATCHER.getAuthorityKind());
+		userInfo.setStatus(UserStatusKind.ENABLED);
+		userInfo.setAuthority(AuthorityKind.ITEM_WATCHER);
+		userInfo.setCreateTime(LocalDateTime.now());
+		userInfo.setUpdateTime(LocalDateTime.now());
 		
 		return Optional.of(repository.save(userInfo));
 	}

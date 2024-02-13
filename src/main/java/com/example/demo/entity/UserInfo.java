@@ -2,10 +2,11 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.UserStatusKind;
+import com.example.demo.entity.converter.UserAuthorityConverter;
+import com.example.demo.entity.converter.UserStatusConverter;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -37,11 +38,20 @@ public class UserInfo {
 	
 	/** 利用可能か(true:利用可能) */
 	@Column(name = "is_disabled")
-	private boolean isDisabled;
+	@Convert(converter = UserStatusConverter.class)
+	private UserStatusKind status;
 	
 	/** ユーザー権限 */
-	@Column()
-	private String authority;
+	@Convert(converter = UserAuthorityConverter.class)
+	private AuthorityKind authority;
+
+	/** 登録日時 */
+	@Column(name = "create_time")
+	private LocalDateTime createTime;
+
+	/** 最終更新日時 */
+	@Column(name = "update_time")
+	private LocalDateTime updateTime;
 
 	/**
 	 * デフォルトコンストラクタ
@@ -55,7 +65,10 @@ public class UserInfo {
 	 * @return ログイン失敗回数がインクリメントされた、自身のインスタンス
 	 */
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(loginId, password, ++loginFailureCount, accountLockedTime, isDisabled, authority);
+		return new UserInfo(
+				loginId, password, ++loginFailureCount, accountLockedTime,
+				status, authority, createTime, updateTime
+		);
 	}
 
 	/**
@@ -64,7 +77,10 @@ public class UserInfo {
 	 * @return ログイン失敗情報がリセットされた、自身のインスタンス
 	 */
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(loginId, password, 0, null, isDisabled, authority);
+		return new UserInfo(
+				loginId, password, 0, null,
+				status, authority, createTime, updateTime
+		);
 	}
 
 	/**
@@ -73,6 +89,8 @@ public class UserInfo {
 	 * @return ログイン失敗回数、アカウントロック日時が更新された、自身のインスタンス
 	 */
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(loginId, password, 0, LocalDateTime.now(), isDisabled, authority);
+		return new UserInfo(loginId, password, 0, LocalDateTime.now(),
+				status, authority, createTime, updateTime
+		);
 	}
 }

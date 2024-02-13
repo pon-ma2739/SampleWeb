@@ -1,7 +1,8 @@
 package com.example.demo.config;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
+import com.github.dozermapper.core.DozerBeanMapper;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +33,6 @@ public class BeanDefine {
 	 */
 	@Bean
 	Mapper mapper() {
-		return new DozerBeanMapper();
+		return DozerBeanMapperBuilder.buildDefault();
 	}
 }
