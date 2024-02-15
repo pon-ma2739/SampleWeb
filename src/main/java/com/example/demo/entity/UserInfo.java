@@ -53,6 +53,10 @@ public class UserInfo {
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
 
+	/** 最終更新ユーザー */
+	@Column(name = "update_user")
+	private String updateUser;
+
 	/**
 	 * デフォルトコンストラクタ
 	 */
@@ -67,7 +71,7 @@ public class UserInfo {
 	public UserInfo incrementLoginFailureCount() {
 		return new UserInfo(
 				loginId, password, ++loginFailureCount, accountLockedTime,
-				status, authority, createTime, updateTime
+				status, authority, createTime, updateTime, updateUser
 		);
 	}
 
@@ -79,7 +83,7 @@ public class UserInfo {
 	public UserInfo resetLoginFailureInfo() {
 		return new UserInfo(
 				loginId, password, 0, null,
-				status, authority, createTime, updateTime
+				status, authority, createTime, updateTime, updateUser
 		);
 	}
 
@@ -90,7 +94,7 @@ public class UserInfo {
 	 */
 	public UserInfo updateAccountLocked() {
 		return new UserInfo(loginId, password, 0, LocalDateTime.now(),
-				status, authority, createTime, updateTime
+				status, authority, createTime, updateTime, updateUser
 		);
 	}
 }
